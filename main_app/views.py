@@ -40,3 +40,4 @@ def signup(request):
     }
     print(form)
     return render(request,"main_app/signup.html",context) 
+ 
