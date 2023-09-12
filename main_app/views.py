@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate,login as auth_login,logout as auth_logout
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
@@ -11,6 +11,7 @@ def home(request):
 
 def ticket(request):
     return render(request,"main_app/ticket.html",{})
+
 def login(request):
     uc=LogInForm()
     if request.method=="POST":
@@ -23,7 +24,7 @@ def login(request):
             return redirect('home')
         else:
             return HttpResponse(username,password)
-    context={"uc":uc}   
+    context={"uc":uc}
     return render(request,"main_app/login.html",context)
 
 def logout(request):
@@ -43,4 +44,5 @@ def signup(request):
         "form":form
     }
     print(form)
-    return render(request,"main_app/signup.html",context)
+    return render(request,"main_app/signup.html",context) 
+ 
