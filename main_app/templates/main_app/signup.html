@@ -1,18 +1,19 @@
 {% extends 'main_app/main.html' %}
+{%load crispy_forms_tags %}
 {% block content%}
 
-<form action="" method="post" >
+<form action="" method="post" style="max-width: 700px;margin: auto;">
     {% csrf_token %}
     <div class="my-5" style="min-height: 500px;">
         <div class="py-5">
         <div class="py-5">
         <div class="py-5">
-            {{ form.as_p}}
+        {{ form|crispy }}
         </div>
         </div>
         </div>
     </div>
-<button type="submit">signup</button>
+<button type="submit">Sign Up</button>
 </form>
 
 {% endblock %} 
