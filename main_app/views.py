@@ -33,7 +33,7 @@ def logout(request):
     return redirect('home')
     
 def signup(request):
-    # this is a signup form 
+    # this is a signup form again
     form=UserCreationForm()
     if request.method=="POST":
         form=UserCreationForm(request.POST)
