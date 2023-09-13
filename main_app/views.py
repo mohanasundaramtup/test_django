@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.contrib.auth import views as auth_views
-from .forms import LogInForm
+from .forms import LogInForm,UserCreateCustomform
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
@@ -44,12 +44,13 @@ def logout(request):
 
 def signup(request):
     if request.method == 'POST':
-        f = UserCreationForm(request.POST)
+        f = UserCreateCustomform(request.POST)
         if f.is_valid():
             f.save()
             messages.success(request, 'Account created successfully')
             return redirect('login')
     else:
-        f = UserCreationForm()
+        f = UserCreateCustomform()
+        print('+++++++++++++',f)
     return render(request, 'main_app/signup.html', {'form': f})  
 
