@@ -51,4 +51,4 @@ def signup(request):
             return redirect('login')
     else:
         f = UserCreationForm()
-    return render(request, 'main_app/signup.html', {'form': f})
+    return render(request, 'main_app/signup.html', {'form': f})  
