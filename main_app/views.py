@@ -5,7 +5,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.contrib.auth import views as auth_views
 from .forms import LogInForm
-# Create your views here.
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 def home(request):
     return render(request,"main_app/home.html",{})
 
@@ -13,7 +15,6 @@ def ticket(request):
     return render(request,"main_app/ticket.html",{})
 
 def login(request):
-    uc=LogInForm()
     if request.method=="POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -21,23 +22,33 @@ def login(request):
         print(username,password)
         if user_1 is not None:
             auth_login(request, user_1)
+            sub="TESTING"
+            msg="BODY"
+            e_f=settings.EMAIL_HOST_USER
+            r_m=["gokulnath.bj@gmail.com",]
+            send_mail(sub,msg,e_f,r_m)
             return redirect('home')
         else:
             return HttpResponse(username,password)
-    context={"uc":uc}
+   
+    else:
+        form=LogInForm()
+        context={"form":form}
+
     return render(request,"main_app/login.html",context)
 
 def logout(request):
     
     auth_logout(request)
     return redirect('home')
-    
+
 def signup(request):
-    
-    form=UserCreationForm()
-    context={
-        "form":form
-    }
-    print(form)
-    return render(request,"main_app/signup.html",context) 
- 
+    if request.method == 'POST':
+        f = UserCreationForm(request.POST)
+        if f.is_valid():
+            f.save()
+            messages.success(request, 'Account created successfully')
+            return redirect('login')
+    else:
+        f = UserCreationForm()
+    return render(request, 'main_app/signup.html', {'form': f})
