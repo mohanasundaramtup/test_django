@@ -33,7 +33,7 @@ def logout(request):
     return redirect('home')
     
 def signup(request):
-    
+    # this is a signup form 
     form=UserCreationForm()
     if request.method=="POST":
         form=UserCreationForm(request.POST)
@@ -45,4 +45,4 @@ def signup(request):
     }
     print(form)
     return render(request,"main_app/signup.html",context) 
-  
+    
