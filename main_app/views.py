@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
-from django.contrib.auth import views as auth_views
 from .forms import LogInForm,UserCreateCustomform
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -16,17 +15,16 @@ def ticket(request):
 
 def login(request):
     if request.method=="POST":
-        username = request.POST.get('username')
+        username = request.POST.get("email")
         password = request.POST.get('password')
         user_1 = authenticate(request, username=username, password=password)
-        print(username,password)
         if user_1 is not None:
             auth_login(request, user_1)
             sub="TESTING"
             msg="BODY"
             e_f=settings.EMAIL_HOST_USER
             r_m=["gokulnath.bj@gmail.com",]
-            send_mail(sub,msg,e_f,r_m)
+            # send_mail(sub,msg,e_f,r_m)
             return redirect('home')
         else:
             return HttpResponse(username,password)
@@ -51,6 +49,5 @@ def signup(request):
             return redirect('login')
     else:
         f = UserCreateCustomform()
-        print('+++++++++++++',f)
     return render(request, 'main_app/signup.html', {'form': f})  
 
